@@ -1,14 +1,14 @@
 # auth
 Martini middleware/handler for http basic authentication.
 
-[API Reference](http://godoc.org/github.com/codegangsta/martini-contrib/auth)
+[API Reference](http://godoc.org/github.com/martini-contrib/auth)
 
 ## Usage
 
 ~~~ go
 import (
   "github.com/codegangsta/martini"
-  "github.com/codegangsta/martini-contrib/auth"
+  "github.com/martini-contrib/auth"
 )
 
 func main() {

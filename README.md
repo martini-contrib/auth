@@ -7,7 +7,7 @@ Martini middleware/handler for http basic authentication.
 
 ~~~ go
 import (
-  "github.com/codegangsta/martini"
+  "github.com/go-martini/martini"
   "github.com/martini-contrib/auth"
 )
 

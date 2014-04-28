@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-// Realm is used when setting the WWW-Authenticate response header.
-var Realm = "Authorization Required"
+// BasicRealm is used when setting the WWW-Authenticate response header.
+var BasicRealm = "Authorization Required"
 
 // Basic returns a Handler that authenticates via Basic Auth. Writes a http.StatusUnauthorized
 // if authentication fails.
@@ -43,6 +43,6 @@ func BasicFunc(authfn func(string, string) bool) http.HandlerFunc {
 }
 
 func unauthorized(res http.ResponseWriter) {
-	res.Header().Set("WWW-Authenticate", "Basic realm=\"" + Realm + "\"")
+	res.Header().Set("WWW-Authenticate", "Basic realm=\"" + BasicRealm + "\"")
 	http.Error(res, "Not Authorized", http.StatusUnauthorized)
 }

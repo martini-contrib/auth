@@ -52,6 +52,16 @@ susceptible to timing attacks. To avoid that, use `auth.SecureCompare` instead:
 }
 ~~~
 
+Upon successful authentication, the username is available to all subsequent
+handlers via the `auth.User` type:
+
+~~~ go
+  m.Get("/", func(user auth.User) string {
+    return "Welcome, " + user
+  })
+}
+~~~
+
 ## Authors
 * [Jeremy Saenz](http://github.com/codegangsta)
 * [Brendon Murphy](http://github.com/bemurphy)

@@ -40,6 +40,6 @@ func BasicFunc(authfn func(string, string) bool) http.HandlerFunc {
 }
 
 func unauthorized(res http.ResponseWriter, realm string) {
-	res.Header().Set("WWW-Authenticate", "Basic realm=\"" + realm + "\"")
+	res.Header().Set("WWW-Authenticate", "Basic realm=\""+realm+"\"")
 	http.Error(res, "Not Authorized", http.StatusUnauthorized)
 }

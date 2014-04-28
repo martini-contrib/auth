@@ -15,8 +15,8 @@ func Test_BasicAuth(t *testing.T) {
 
 	m := martini.New()
 	m.Use(Basic("foo", "bar"))
-	m.Use(func(res http.ResponseWriter, req *http.Request) {
-		res.Write([]byte("hello"))
+	m.Use(func(res http.ResponseWriter, req *http.Request, u User) {
+		res.Write([]byte("hello " + u))
 	})
 
 	r, _ := http.NewRequest("GET", "foo", nil)
@@ -27,7 +27,7 @@ func Test_BasicAuth(t *testing.T) {
 		t.Error("Response not 401")
 	}
 
-	if recorder.Body.String() == "hello" {
+	if recorder.Body.String() == "hello foo" {
 		t.Error("Auth block failed")
 	}
 
@@ -39,7 +39,7 @@ func Test_BasicAuth(t *testing.T) {
 		t.Error("Response is 401")
 	}
 
-	if recorder.Body.String() != "hello" {
+	if recorder.Body.String() != "hello foo" {
 		t.Error("Auth failed, got: ", recorder.Body.String())
 	}
 }

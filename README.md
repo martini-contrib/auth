@@ -17,7 +17,6 @@ func main() {
   m.Use(auth.Basic("username", "secretpassword"))
   m.Run()
 }
-
 ~~~
 
 ## Authors

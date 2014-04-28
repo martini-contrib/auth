@@ -50,6 +50,7 @@ func Test_BasicFuncAuth(t *testing.T) {
 		"bar:spam":       true,
 		"foo:eggs":       false,
 		"bar:eggs":       false,
+		"baz:spam":       false,
 		"foo:spam:extra": false,
 		"dummy:":         false,
 		"dummy":          false,

@@ -6,6 +6,9 @@ import (
 	"strings"
 )
 
+// Realm is used when setting the WWW-Authenticate response header.
+var Realm = "Authorization Required"
+
 // Basic returns a Handler that authenticates via Basic Auth. Writes a http.StatusUnauthorized
 // if authentication fails.
 func Basic(username string, password string) http.HandlerFunc {
@@ -13,7 +16,7 @@ func Basic(username string, password string) http.HandlerFunc {
 	return func(res http.ResponseWriter, req *http.Request) {
 		auth := req.Header.Get("Authorization")
 		if !SecureCompare(auth, "Basic "+siteAuth) {
-			unauthorized(res, "Authorization Required")
+			unauthorized(res)
 		}
 	}
 }
@@ -24,22 +27,22 @@ func BasicFunc(authfn func(string, string) bool) http.HandlerFunc {
 	return func(res http.ResponseWriter, req *http.Request) {
 		auth := req.Header.Get("Authorization")
 		if len(auth) < 6 || auth[:6] != "Basic " {
-			unauthorized(res, "Authorization Required")
+			unauthorized(res)
 			return
 		}
 		b, err := base64.StdEncoding.DecodeString(auth[6:])
 		if err != nil {
-			unauthorized(res, "Authorization Required")
+			unauthorized(res)
 			return
 		}
 		tokens := strings.SplitN(string(b), ":", 2)
 		if len(tokens) != 2 || !authfn(tokens[0], tokens[1]) {
-			unauthorized(res, "Authorization Required")
+			unauthorized(res)
 		}
 	}
 }
 
-func unauthorized(res http.ResponseWriter, realm string) {
-	res.Header().Set("WWW-Authenticate", "Basic realm=\"" + realm + "\"")
+func unauthorized(res http.ResponseWriter) {
+	res.Header().Set("WWW-Authenticate", "Basic realm=\"" + Realm + "\"")
 	http.Error(res, "Not Authorized", http.StatusUnauthorized)
 }

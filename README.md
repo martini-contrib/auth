@@ -37,7 +37,7 @@ func main() {
   // authenticate every request
   m.Use(auth.BasicFunc(func(username, password string) bool {
     return username == "admin" && password == "guessme"
-  })
+  }))
   m.Run()
 }
 ~~~

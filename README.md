@@ -48,7 +48,7 @@ susceptible to timing attacks. To avoid that, use `auth.SecureCompare` instead:
 ~~~ go
   m.Use(auth.BasicFunc(func(username, password string) bool {
     return auth.SecureCompare(username, "admin") && auth.SecureCompare(password, "guessme")
-  })
+  }))
 }
 ~~~
 
@@ -57,7 +57,7 @@ handlers via the `auth.User` type:
 
 ~~~ go
   m.Get("/", func(user auth.User) string {
-    return "Welcome, " + user
+    return "Welcome, " + string(user)
   })
 }
 ~~~
